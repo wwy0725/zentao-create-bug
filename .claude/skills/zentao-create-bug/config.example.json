@@ -1,0 +1,16 @@
+{
+  "_说明": "模板：复制为同目录 config.json 后填写。baseUrl：禅道地址；productID/productName：目标产品（数值ID/显示名）；openedBuild：影响版本名称，必填（迭代变了要改）；module：所属模块路径，/ 表示根（不选）；execution：所属迭代名称，空=不填；assignedTo：当前指派人（禅道显示名或账号），空=保持页面默认；story：相关需求ID，空=不填；iterationTag/testRound：标题前缀【迭代日期】【测试轮次】；username/password：禅道账号密码，都填了才会话过期时自动登录，留空=过期时请你手动登一次；autoSubmit：true=跳过提交前的人工确认（默认false，必须确认）",
+  "baseUrl": "",
+  "productID": 0,
+  "productName": "",
+  "module": "",
+  "execution": "",
+  "openedBuild": "",
+  "assignedTo": "",
+  "story": "",
+  "iterationTag": "",
+  "testRound": "",
+  "username": "",
+  "password": "",
+  "autoSubmit": false
+}

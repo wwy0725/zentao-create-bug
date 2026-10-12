@@ -1,0 +1,8 @@
+# 个人配置（产品ID/指派人/账密），从 config.example.json 复制，不入库
+.claude/skills/zentao-create-bug/config.json
+
+# playwright MCP 上传副本等临时文件
+.playwright-mcp/
+
+# 个人本地设置（cc 惯例不入库）
+.claude/settings.local.json

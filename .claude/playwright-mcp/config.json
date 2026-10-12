@@ -1,0 +1,14 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "channel": "chrome",
+      "headless": false,
+      "args": [
+        "--no-sandbox",
+        "--disable-gpu"
+      ]
+    }
+  },
+  "saveSession": false
+}
