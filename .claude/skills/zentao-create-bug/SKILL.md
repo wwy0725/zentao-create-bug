@@ -12,8 +12,8 @@ description: 自动创建禅道（ZenTao）Bug。当用户说"提个bug / 创建
 ## 0. 前置检查
 
 1. **读配置**：读取本 skill 目录下的 `config.json`（每次执行都重读，用户改完即生效）。文件不存在时，指引用户从 `config.example.json` 复制一份并填好必填项（baseUrl / productID / openedBuild 等），不要替用户编造这些值。
-2. **浏览器**：使用 `mcp__playwright__*` 工具（本项目 `.mcp.json` 定义的 playwright server，profile 在 `~/.claude/playwright-mcp/browser-data`，禅道登录态持久保存在该 profile 里）。不要用扩展模式的 `mcp__playwright-extension__*`。
-3. **有头/无头**：由项目配置 `.claude/playwright-mcp/config.json` 的 `browser.launchOptions.headless` 控制（`false`=有头，默认；`true`=无头）。切换 = 改该字段后杀 MCP 的 node 进程让 IDE 重拉（cookie 在持久 profile 里，重启不丢登录态）。⚠️ 无头模式下"请用户在浏览器窗口手动登录"流程走不通：无头 + 会话过期 + 未配账密时，切回有头让用户登录，不要卡在无头里重试。
+2. **浏览器**：使用 `mcp__playwright__*` 工具（全局 `~/.claude.json` 定义的 playwright server，profile 在 `~/.claude/playwright-mcp/browser-data`，禅道登录态持久保存在该 profile 里）。不要用扩展模式的 `mcp__playwright-extension__*`。
+3. **有头/无头**：由全局配置 `~/.claude/playwright-mcp/config.json` 的 `browser.launchOptions.headless` 控制（`false`=有头，默认；`true`=无头）。切换 = 改该字段后杀 MCP 的 node 进程让 IDE 重拉（cookie 在持久 profile 里，重启不丢登录态）。⚠️ 无头模式下"请用户在浏览器窗口手动登录"流程走不通：无头 + 会话过期 + 未配账密时，切回有头让用户登录，不要卡在无头里重试。
 4. **故障处理**：
    - `mcp__playwright__*` 工具不存在（MCP server 没起来）→ 常见原因：没装 Node/npx，或 npx 首次拉包网络不通。指引用户确认 `node -v` 有输出、能访问 npm registry，修好后重启会话。
    - 首次调用浏览器报 launch/浏览器找不到类错误 → 本机没装 Chrome（配置 `channel: "chrome"` 用系统 Chrome）。指引用户安装 Google Chrome 后重试。
