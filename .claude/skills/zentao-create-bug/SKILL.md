@@ -132,8 +132,9 @@ el.dispatchEvent(new Event('change', { bubbles: true }));
    2. 点"浏览..."会失败（透明 `input[name="imgFile"]` 拦截点击）——**直接点 Choose File 按钮（即该 file input 本身）**，文件选择器弹出后 `browser_file_upload` 传文件绝对路径。
    3. MCP 只允许上传工作区目录内的文件，工作区外的截图先拷贝到工作区（如 `.playwright-mcp/uploads/`）。
    4. 点"确定"——禅道会把图片传到服务端并插入编辑器（`/pro/file-read-xxx.png`）。
-   5. **验证并整理位置**：回读 iframe，确认 `img` 存在，且**独占最后一个 `<p>`**（不在 [期望] 文字段里）：
-      `const img=doc.body.querySelector('img'); const p=doc.createElement('p'); p.appendChild(img); doc.body.appendChild(p);`
+   5. **验证并整理位置**：回读 iframe，确认 `img` 存在且独占一个 `<p>`。**截图按内容插入对应段落（步骤/结果/期望）之后，不盲目全堆在末尾**——页面表现图放对应步骤后、接口响应图放 [结果] 对应描述段后、日志图放报错列表后。**步骤文字里不写"见截图N"这类引用**，图放在哪就近说明在哪；同一张图如有助理解可以在多处插入，按需即可。KindEditor 光标位置不可靠（新图常插到开头或顶掉段落），全部传完后**重建整个 innerHTML**（步骤文字 + 已上传的 img src 按正确位置交错拼接）最稳：
+      - 重建时用已上传的服务端 src（`/pro/file-read-<id>.png`），不要用本地路径；
+      - 每张图独立一个 `<p>`，前后不留空段落。
 
    录屏视频走附件（见下方附件规则）。
 
@@ -158,7 +159,7 @@ el.dispatchEvent(new Event('change', { bubbles: true }));
 点"保存"之前，**逐字段回读表单的实际状态并核对**，任何一项不符都要先修正：
 
 1. 回读每个下拉的 **UI 展示文本**（不是只看 select.value）：module/project/type/assignedTo 用 `$(s).next('.chosen-container')` 里的显示文本；openedBuild 回读 `.search-choice` 项；severity/pri 回读 `.label-severity` 的 `data-severity` 属性
-2. 回读标题 input 的 value、步骤 iframe 的 innerText（确认三段式完整、换行正确）+ 截图 `<img>` 存在且独立成段
+2. 回读标题 input 的 value、步骤 iframe 的 innerText（确认三段式完整、换行正确）+ 截图 `<img>` 存在、独立成段且插在内容对应的段落之后
 3. 对照预期清单逐项核对，输出核对结果（`字段 = 实际值 ✓/✗`）
 4. 有 ✗ 则修正后重新自检，**不许带着 ✗ 提交**
 
